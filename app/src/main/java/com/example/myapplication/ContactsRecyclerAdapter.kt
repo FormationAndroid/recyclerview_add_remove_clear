@@ -35,6 +35,15 @@ class ContactsRecyclerAdapter(private val contacts: MutableList<Contact>): Recyc
 
     }
 
+    fun addContact(contact: Contact) {
+        contacts.add(contact)
+        notifyItemInserted(itemCount)
+    }
+
+    fun clearAll(){
+        contacts.clear()
+        notifyDataSetChanged()
+    }
 
     override fun onBindViewHolder(holder: ContactViewHolder, position: Int) {
         holder.bind(contacts[position])

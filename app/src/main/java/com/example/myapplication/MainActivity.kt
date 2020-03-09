@@ -3,6 +3,7 @@ package com.example.myapplication
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
@@ -31,16 +32,23 @@ class MainActivity : AppCompatActivity() {
             dialogView.apply {
 
                 btnAdd.setOnClickListener {
-                    // TODO : checker si nom et age sont renseignés correctement, sinon afficher Toast
 
-                    val newContact = Contact(
-                            dialogView.editName.text.toString(),
-                            dialogView.editAge.text.toString().toInt()
-                    )
+                    val nameStr = dialogView.editName.text.toString()
+                    val ageStr = dialogView.editAge.text.toString()
 
-                    // TODO : ajouter newContact dans la liste de l'adapter
+                    if (nameStr.isEmpty() || ageStr.isEmpty()){
+                        Toast.makeText(applicationContext, "Merci de renseigner les champs", Toast.LENGTH_SHORT).show()
+                    }
+                    else {
 
-                    alertDialog.cancel()
+                        val newContact = Contact(
+                                nameStr,
+                                ageStr.toInt()
+                        )
+                        adapter.addContact(newContact)
+                        alertDialog.cancel()
+                    }
+
                 }
 
                 btnCancel.setOnClickListener {
@@ -57,7 +65,7 @@ class MainActivity : AppCompatActivity() {
 
 
         btnClearList.setOnClickListener {
-            // TODO : supprimer toute la liste
+            adapter.clearAll()
         }
 
     }
